@@ -7,9 +7,10 @@ import time
 import favicon
 from datetime import datetime
 import chardet
+import os
 
 """
-    传入网页的 url 获得网页上一部分信息 的工具
+    传入网页的 url 获得网页上部分信息
 """
 class UrlUtils:
     """
@@ -155,6 +156,11 @@ def parse_links(url: str) -> list[str]:
 if __name__ == "__main__":
     print(datetime.now())
 
+    # 初始化 data.json
+    if not os.path.exists("data.json"):
+        with open("data.json", "w") as f:
+            json.dump({}, f, indent=4)
+
     with open("data.json", "r", encoding="utf-8") as f:
         data = json.load(f)
     
@@ -189,4 +195,4 @@ if __name__ == "__main__":
             json.dump(data, f, indent=4)
 
         print("--------------------END----------------------\n")
-        DingWebhookBot.send_text_to_ding(msg="今日网页监听完毕, 请查收")
+        DingWebhookBot.send_text_to_ding(msg="今日网页订阅推送完毕, 请查收")
